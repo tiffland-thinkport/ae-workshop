@@ -1,0 +1,17 @@
+lowercaseOutputName: true
+rules:
+  - pattern: kafka.server<type=BrokerTopicMetrics, name=(MessagesInPerSec)><>Count
+    name: kafka_broker_messages_in_total
+  - pattern: kafka.server<type=BrokerTopicMetrics, name=(BytesInPerSec)><>Count
+    name: kafka_broker_bytes_in_total
+  - pattern: kafka.server<type=BrokerTopicMetrics, name=(BytesOutPerSec)><>Count
+    name: kafka_broker_bytes_out_total
+  - pattern: kafka.producer<type=producer-metrics, client-id=.*, name=record-send-rate><>Value
+    name: kafka_producer_record_send_rate
+  - pattern: kafka.consumer<type=consumer-fetch-manager-metrics, client-id=.*, name=records-consumed-rate><>Value
+    name: kafka_consumer_records_consumed_rate
+  - pattern: kafka.server<type=BrokerTopicMetrics, name=MessagesInPerSec, topic=(.+)><>Count
+    name: kafka_topic_messages_in_total_per_topic
+    labels:
+      topic: "$1"
+    help: "Total number of messages received per second for each topic"
